@@ -96,7 +96,7 @@ const checkWalls = (x, y, max) => {
         update(playerRef, {
             defeatedBy: "watch Walls",
         });
-        clearInterval(gameInterval);
+        // clearInterval(gameInterval);
     }
 };
 const landingTrails = () => {
@@ -234,7 +234,7 @@ const initGame = (lobbyName) => {
         });
         landingTrails();
         get(playerRef).then((currentPlayerData) => {
-            if (currentPlayerData.val().defeatedBy == "notYet") {
+            if (game && currentPlayerData.val().defeatedBy == "notYet") {
                 get(lobbyRef).then((allPlayersData) => {
                     const playersArray = [];
                     clearCanvas();
