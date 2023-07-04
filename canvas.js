@@ -4,7 +4,7 @@ import * as avatars from "./avatars";
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 export const block = 20;
-export const dimension = 400;
+export const dimension = 1000;
 export const directions = ["up", "down", "left", "right"];
 export let score = 0;
 let newLands = {};

@@ -276,7 +276,7 @@ const initGame = (lobbyName) => {
                 resetScore();
             }
         });
-    }, 1000);
+    }, 100);
 
     // onDisconnect();
     // remove()
