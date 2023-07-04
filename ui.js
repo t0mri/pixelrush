@@ -38,7 +38,8 @@ window.onload = () => {
     blackScreen.animate({ opacity: 0 }, { duration: 2000, fill: "forwards" });
 };
 export const throwError = (err) => {
-    new Audio("./Assets/Sfx/err.wav").play();
+    // new Audio("./Assets/Sfx/err.wav").play();
+    new Audio("/pixelrush/Assets/Sfx/err.wav").play();
     document.querySelector(".errContainer").remove();
     const errBox = document.createElement("div");
     errBox.className = "errContainer";
