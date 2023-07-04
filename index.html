@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content=" user-scalable=no" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=0" /> -->
+        <link rel="stylesheet" href="style.css" />
+        <meta name="Cross-Origin-Opener-Policy" content="none" />
+        <title>Pixel Rush</title>
+        <link
+            rel="shortcut icon"
+            href="./Assets/Avatars/Ninja/down.png"
+            type="image/x-icon"
+        />
+        <script type="module" src="/main.js" defer></script>
+    </head>
+    <body>
+        <div style="display: none">
+            <img src="./Assets/Avatars/Ninja/up.png" alt="" class="ninja" />
+            <img src="./Assets/Avatars/Ninja/down.png" alt="" class="ninja" />
+            <img src="./Assets/Avatars/Ninja/left.png" alt="" class="ninja" />
+            <img src="./Assets/Avatars/Ninja/right.png" alt="" class="ninja" />
+            <img
+                src="./Assets/Avatars/Ninja/pattern.png"
+                alt=""
+                class="ninja"
+            />
+
+            <img src="./Assets/Avatars/gruce/up.png" alt="" class="gruce" />
+            <img src="./Assets/Avatars/gruce/down.png" alt="" class="gruce" />
+            <img src="./Assets/Avatars/gruce/left.png" alt="" class="gruce" />
+            <img src="./Assets/Avatars/gruce/right.png" alt="" class="gruce" />
+            <img
+                src="./Assets/Avatars/gruce/pattern.png"
+                alt=""
+                class="gruce"
+            />
+
+            <img src="./Assets/Avatars/gas/up.png" alt="" class="gas" />
+            <img src="./Assets/Avatars/gas/down.png" alt="" class="gas" />
+            <img src="./Assets/Avatars/gas/left.png" alt="" class="gas" />
+            <img src="./Assets/Avatars/gas/right.png" alt="" class="gas" />
+            <img src="./Assets/Avatars/gas/pattern.png" alt="" class="gas" />
+
+            <img src="./Assets/Avatars/ndran/up.png" alt="" class="ndran" />
+            <img src="./Assets/Avatars/ndran/down.png" alt="" class="ndran" />
+            <img src="./Assets/Avatars/ndran/left.png" alt="" class="ndran" />
+            <img src="./Assets/Avatars/ndran/right.png" alt="" class="ndran" />
+            <img
+                src="./Assets/Avatars/ndran/pattern.png"
+                alt=""
+                class="ndran"
+            />
+        </div>
+        <button onclick="toggleMusic()">
+            <img
+                src="Assets/Icons/music-note-svgrepo-com.svg"
+                alt="music"
+                music
+            />
+        </button>
+        <div class="errContainer"></div>
+        <div class="startPage">
+            <div>
+                <h1>&nbsp;Pixel<span></span>Rush</h1>
+                <div currentAvatar="ninja">
+                    <img
+                        src="./Assets/Icons/arrow-down-sign-to-navigate.png"
+                        alt="leftArrow"
+                        class="navArrows"
+                        onclick="changeAvatar(0)"
+                    />
+                    <img
+                        src="./Assets/Avatars/Ninja/down.png"
+                        alt="avatar"
+                        name="ninja"
+                        style="display: block"
+                    />
+                    <img
+                        src="./Assets/Avatars/Gruce/down.png"
+                        alt="avatar"
+                        name="gruce"
+                    />
+                    <img
+                        src="./Assets/Avatars/Gas/down.png"
+                        alt="avatar"
+                        name="gas"
+                    />
+                    <img
+                        src="./Assets/Avatars/ndran/down.png"
+                        alt="avatar"
+                        name="ndran"
+                    />
+                    <div class="yogisCredit">
+                        Special thanks to
+                        <a
+                            href="https://www.instagram.com/toshiro_yogi/"
+                            target="_blank"
+                            >@toshiro_yogi</a
+                        >
+                        for creating this avatar
+                    </div>
+                    <img
+                        src="./Assets/Icons/arrow-down-sign-to-navigate.png"
+                        alt="rightArrow"
+                        class="navArrows"
+                        onclick="changeAvatar(1)"
+                    />
+                </div>
+                <button id="signBtn" onclick="signIn()">
+                    <img src="./Assets/Icons/search.png" alt="Google" /> Sign in
+                    with Google
+                </button>
+                <input
+                    type="text"
+                    name="gamerID"
+                    id="gamerID"
+                    style="display: none"
+                    readonly
+                />
+                <form onsubmit="joinLobby(event,lobbyName.value)">
+                    <input type="text" name="lobbyName" /><input
+                        type="submit"
+                        value="Join"
+                    />
+                </form>
+                <form onsubmit="createLobby(event,lobbyName.value)">
+                    <input type="text" name="lobbyName" /><input
+                        type="submit"
+                        value="Create"
+                    />
+                </form>
+            </div>
+        </div>
+        <div class="blackScreen">
+            <div class="loadingContainer">
+                <img src="./Assets/Avatars/Ninja/up.png" alt="loadingLoop" />
+                <img src="./Assets/Avatars/Ninja/right.png" alt="loadingLoop" />
+                <img src="./Assets/Avatars/Ninja/down.png" alt="loadingLoop" />
+                <img src="./Assets/Avatars/Ninja/left.png" alt="loadingLoop" />
+                <h2>Loading...</h2>
+            </div>
+        </div>
+        <div class="container">
+            <canvas></canvas>
+            <div class="scoreBoard">
+                <div class="scoreCard scoreCard1"></div>
+                <div class="scoreCard scoreCard2"></div>
+                <div class="scoreCard scoreCard3"></div>
+                <div class="scoreCard scoreCard4"></div>
+                <div class="scoreCard scoreCard5"></div>
+            </div>
+        </div>
+    </body>
+</html>

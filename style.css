@@ -1,0 +1,259 @@
+@font-face {
+    font-family: arcade;
+    src: url("./Assets/Fonts/ARCADECLASSIC.TTF");
+}
+*,
+*::after,
+*::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: arcade;
+    font-weight: 400;
+    image-rendering: pixelated;
+    color: white;
+}
+body {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+.errContainer {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    background: rgb(255, 201, 201);
+    font-size: 1.5rem;
+    color: #ff8080;
+    height: 4.3125rem;
+    border: 0.3125rem solid rgb(255, 128, 128);
+    border-left: 0;
+    border-right: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    z-index: 3;
+}
+@keyframes errAnimation {
+    0% {
+        opacity: 0;
+        transform: translate(0, 100%);
+    }
+    25% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    75% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(0, -100%);
+    }
+}
+.errIcon {
+    height: 1.5rem;
+    margin-inline: 0.5rem;
+}
+button:has(img[alt="music"]) {
+    z-index: 100;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    padding: 1rem;
+    border-radius: 50%;
+    border: transparent;
+    background-color: rgba(0, 0, 0, 0.245);
+}
+img[alt="music"] {
+    height: 2.25rem;
+}
+button:has(img[music="none"])::before {
+    content: "";
+    height: 2.25rem;
+    width: 0.2rem;
+    background: white;
+    position: absolute;
+    rotate: -45deg;
+    /* transform: translate(0%, 0%); */
+    top: 1rem;
+    left: 2rem;
+    /* z-index: 2; */
+}
+.startPage {
+    height: 100vh;
+    background-image: url("./Assets/Misc/newBgsqr.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+.startPage > div {
+    display: grid;
+    gap: 0.625rem;
+}
+.startPage h1 {
+    font-size: 14.75rem;
+    text-align: center;
+    text-shadow: 0 5px rgba(0, 0, 0, 0.5);
+    line-height: 60%;
+}
+@media screen and (orientation: portrait), screen and (max-width: 1240px) {
+    .startPage h1 > span {
+        display: block;
+    }
+}
+.startPage > div > div {
+    /* width: 54.25rem; */
+    width: clamp(5rem, 54.25rem, 90vw);
+    height: 23.75rem;
+    margin-inline: auto;
+    display: flex;
+    place-items: center;
+    position: relative;
+}
+.startPage > div > div > img[alt="avatar"] {
+    /* opacity: 0; */
+    height: 17.94rem;
+    margin: auto;
+    z-index: 2;
+    display: none;
+}
+.startPage > div > div::before,
+.startPage > div > div::after {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    pointer-events: none;
+}
+.startPage > div > div::before {
+    content: attr(currentAvatar);
+    color: #52d9fe;
+    mix-blend-mode: difference;
+    font-size: 14.75rem;
+    transform: translate(-50%, 25%);
+    bottom: 0;
+}
+.startPage > div > div::after {
+    content: "";
+    background: rgb(0, 0, 0);
+    width: 14.313125rem;
+    height: 1rem;
+    bottom: 10%;
+    transform: translate(-50%, 0);
+    filter: blur(0.625rem);
+}
+.yogisCredit {
+    /* height: 25%; */
+    width: 40%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.245);
+    padding: 1rem;
+    border-radius: 1rem;
+    top: -3%;
+    left: 30%;
+    /* border: 0.3125rem solid white; */
+    /* word-spacing: 3px; */
+    font-size: 1.5rem;
+    text-align: center;
+    display: none;
+}
+.navArrows {
+    height: 4.25rem;
+    filter: invert();
+}
+.navArrows[alt="leftArrow"] {
+    transform: rotate(90deg);
+}
+.navArrows[alt="rightArrow"] {
+    transform: rotate(-90deg);
+}
+img[alt="Google"] {
+    height: 50%;
+    margin-inline: 1rem;
+    transform: translate(0, 15%);
+}
+form {
+    margin: auto;
+}
+input,
+#gamerID,
+#signBtn {
+    height: 4.3125rem;
+    border: 0.3125rem solid white;
+    text-align: center;
+    font-size: 1.5rem;
+    outline: transparent;
+    margin-inline: 0.3125rem;
+}
+#gamerID,
+#signBtn {
+    color: white;
+    width: 32.375rem;
+    margin-inline: auto;
+    background-color: #52d9fe;
+    font-size: 2.25rem;
+}
+input[type="text"] {
+    width: 21.4rem;
+    color: #52d9fe;
+}
+input[type="submit"] {
+    width: 10.4rem;
+    background-color: #52d9fe;
+}
+.blackScreen {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background: #000;
+    opacity: 1;
+    pointer-events: none;
+    display: grid;
+    place-items: center;
+}
+img[alt="loadingLoop"] {
+    height: 2.25rem;
+    display: none;
+}
+.loadingContainer {
+    display: flex;
+    gap: 1rem;
+    height: min-content;
+    align-items: center;
+}
+.container {
+    height: 0px;
+    overflow: hidden;
+}
+canvas {
+    border: 0.625rem solid rgb(200, 200, 200);
+    background-image: linear-gradient(45deg, #80808030 25%, transparent 25%),
+        linear-gradient(-45deg, #80808030 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #80808030 75%),
+        linear-gradient(-45deg, transparent 75%, #80808030 75%);
+}
+.scoreBoard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20rem;
+    display: grid;
+    justify-items: right;
+}
+.scoreCard {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 2rem;
+    padding: 0.3rem 01rem;
+    display: none;
+}
