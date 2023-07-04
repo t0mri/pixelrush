@@ -96,6 +96,7 @@ const checkWalls = (x, y, max) => {
         update(playerRef, {
             defeatedBy: "watch Walls",
         });
+        clearInterval(gameInterval);
     }
 };
 const landingTrails = () => {
