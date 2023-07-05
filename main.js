@@ -52,6 +52,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase();
+
 const scoresRef = ref(db, "scores");
 window.up = [0, -1];
 window.down = [0, 1];

@@ -1,4 +1,6 @@
 import { dimension } from "./canvas";
+import errImg from "./Assets/Icons/tooltip-start-alert-svgrepo-com.svg";
+import errAudio from "./Assets/Sfx/err.wav";
 
 const body = document.body;
 const musicIcon = document.querySelector(`[alt="music"]`);
@@ -38,12 +40,12 @@ window.onload = () => {
     blackScreen.animate({ opacity: 0 }, { duration: 2000, fill: "forwards" });
 };
 export const throwError = (err) => {
-    // new Audio("./Assets/Sfx/err.wav").play();
-    new Audio("/pixelrush/Assets/Sfx/err.wav").play();
+    new Audio(errAudio).play();
+    // new Audio("/pixelrush/Assets/Sfx/err.wav").play();
     document.querySelector(".errContainer").remove();
     const errBox = document.createElement("div");
     errBox.className = "errContainer";
-    errBox.innerHTML = `<img src="./Assets/Icons/tooltip-start-alert-svgrepo-com.svg" class="errIcon"/>${err}`;
+    errBox.innerHTML = `<img src=${errImg} class="errIcon"/>${err}`;
     errBox.style.animation = "errAnimation 3s";
     document.body.appendChild(errBox);
 };
