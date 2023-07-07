@@ -2,6 +2,7 @@ import { dimension } from "./canvas";
 import errImg from "./Assets/Icons/tooltip-start-alert-svgrepo-com.svg";
 import errAudio from "./Assets/Sfx/err.wav";
 import gameMusicSrc from "./Assets/Sfx/Extraterrestrial.mp3";
+import touchAudio from "./Assets/Sfx/touch.wav";
 
 const body = document.body;
 const musicIcon = document.querySelector(`[alt="music"]`);
@@ -25,9 +26,9 @@ const scoreBoardColors = [
 ];
 const YogisCreditContainer = document.querySelector(".yogisCredit");
 let musicValue = localStorage.getItem("pxlrshmscvl") ?? true;
-let avatarIndex = 0;
+let avatarIndex = localStorage.getItem("pxlrshavatarindexvalue") ?? 0;
 let loadingLoopIndex = 0;
-export let avatar = "ninja";
+export let avatar = localStorage.getItem("pxlrshavatarvalue") ?? "ninja";
 let YogisCredit = true;
 
 gameMusic.loop = true;
@@ -68,8 +69,14 @@ musicIcon.setAttribute(
     "music",
     (localStorage.getItem("pxlrshmscvl") == "true" ? true : false) ? "" : "none"
 );
+console.log(localStorage.getItem("pxlrshavatarvalue"));
+console.log(localStorage.getItem("pxlrshavatarindexvalue"));
+document
+    .querySelector(".startPage > div > div")
+    .setAttribute("currentAvatar", avatars[avatarIndex].name);
+avatars[avatarIndex].style.display = "block";
 export const changeAvatar = (key) => {
-    new Audio("./Assets/Sfx/touch.wav").play();
+    new Audio(touchAudio).play();
     const tempIndex =
         key == 0
             ? avatarIndex - 1 >= 0
@@ -85,6 +92,10 @@ export const changeAvatar = (key) => {
         .setAttribute("currentAvatar", avatars[tempIndex].name);
     avatar = avatars[tempIndex].name;
     avatarIndex = tempIndex;
+    localStorage.setItem("pxlrshavatarindexvalue", tempIndex);
+    localStorage.setItem("pxlrshavatarvalue", avatars[tempIndex].name);
+    console.log(localStorage.getItem("pxlrshavatarvalue"));
+    console.log(localStorage.getItem("pxlrshavatarindexvalue"));
 
     if (YogisCredit && avatarIndex == 3) {
         YogisCreditContainer.style.display = "block";
