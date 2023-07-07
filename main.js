@@ -6,6 +6,7 @@ import {
     uiTransition,
     updateSignInInfo,
     updateScoreBoard,
+    playGameMusic,
 } from "./ui";
 import {
     block,
@@ -70,7 +71,7 @@ let direction = directions[Math.round(Math.random() * 3)];
 let [xVel, yVel] = window[direction];
 let trails = {};
 let lands = {};
-let musicValue = true;
+
 let comingback = false;
 let initialX;
 let initialY;
@@ -86,7 +87,7 @@ const randomPosition = () => {
 heroPosX = randomPosition();
 heroPosY = randomPosition();
 
-window.toggleMusic = () => toggleMusic((musicValue = !musicValue), game);
+window.toggleMusic = () => toggleMusic(game);
 window.changeAvatar = (key) => changeAvatar(key);
 window.signIn = () => {
     signInWithPopup(auth, new GoogleAuthProvider());
@@ -271,7 +272,7 @@ const initGame = (lobbyName) => {
             } else {
                 clearInterval(gameInterval);
                 throwError(currentPlayerData.val().defeatedBy);
-                toggleMusic(musicValue, game);
+                toggleMusic(game);
                 remove(playerRef);
                 uiTransition(game);
                 updateScoreBoard([]);
@@ -287,7 +288,7 @@ const initGame = (lobbyName) => {
 const gameMode = (lobbyName) => {
     game = true;
     uiTransition(game);
-    toggleMusic(musicValue, game);
+    playGameMusic();
     setTimeout(() => {
         initGame(lobbyName);
     }, 1750);

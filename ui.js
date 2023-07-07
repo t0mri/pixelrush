@@ -1,10 +1,11 @@
 import { dimension } from "./canvas";
 import errImg from "./Assets/Icons/tooltip-start-alert-svgrepo-com.svg";
 import errAudio from "./Assets/Sfx/err.wav";
+import gameMusicSrc from "./Assets/Sfx/Extraterrestrial.mp3";
 
 const body = document.body;
 const musicIcon = document.querySelector(`[alt="music"]`);
-const gameMusic = new Audio("./Assets/Sfx/Extraterrestrial.mp3");
+const gameMusic = new Audio(gameMusicSrc);
 const avatars = document.querySelectorAll(`[alt="avatar"]`);
 const playerNamerDisplay = document.getElementById("gamerID");
 const signInBtn = document.getElementById("signBtn");
@@ -23,7 +24,7 @@ const scoreBoardColors = [
     "#484D6D",
 ];
 const YogisCreditContainer = document.querySelector(".yogisCredit");
-
+let musicValue = localStorage.getItem("pxlrshmscvl") ?? true;
 let avatarIndex = 0;
 let loadingLoopIndex = 0;
 export let avatar = "ninja";
@@ -49,11 +50,24 @@ export const throwError = (err) => {
     errBox.style.animation = "errAnimation 3s";
     document.body.appendChild(errBox);
 };
-export const toggleMusic = (key, game) => {
+export const playGameMusic = () => {
+    if (localStorage.getItem("pxlrshmscvl") == "true" ? true : false) {
+        gameMusic.play();
+    }
+};
+export const toggleMusic = (game) => {
+    musicValue = !musicValue;
+    localStorage.setItem("pxlrshmscvl", musicValue ? "false" : "true");
+    let key = localStorage.getItem("pxlrshmscvl") == "true" ? true : false;
+    console.log(localStorage.getItem("pxlrshmscvl"), key);
     gameMusic[key && game ? "play" : "pause"]();
     gameMusic.currentTime = key ? 0 : gameMusic.currentTime;
     musicIcon.setAttribute("music", key ? "" : "none");
 };
+musicIcon.setAttribute(
+    "music",
+    (localStorage.getItem("pxlrshmscvl") == "true" ? true : false) ? "" : "none"
+);
 export const changeAvatar = (key) => {
     new Audio("./Assets/Sfx/touch.wav").play();
     const tempIndex =
