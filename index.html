@@ -13,8 +13,8 @@
             type="image/x-icon"
         />
         
-      <script type="module" crossorigin src="/pixelrush/assets/index-30006eb9.js"></script>
-      <link rel="stylesheet" href="/pixelrush/assets/index-0175a54a.css">
+      <script type="module" crossorigin src="/pixelrush/assets/index-a70af3a4.js"></script>
+      <link rel="stylesheet" href="/pixelrush/assets/index-939432b5.css">
     </head>
     <body>
         <div style="display: none">
@@ -54,13 +54,17 @@
                 class="ndran"
             />
         </div>
-        <button onclick="toggleMusic()">
-            <img
-                src="/pixelrush/assets/music-note-svgrepo-com-177ef4fb.svg"
-                alt="music"
-                music
-            />
-        </button>
+        <div class="controls">
+            <button onclick="toggleMusic()" class="control">
+                <img
+                    src="/pixelrush/assets/music-note-svgrepo-com-d5bb501c.svg"
+                    alt="music"
+                />
+            </button>
+            <button class="control" onclick="toggleFullscreen()">
+                <img src="/pixelrush/assets/maximize-258ff6d3.png" alt="fullscreen" />
+            </button>
+        </div>
         <div class="errContainer"></div>
         <div class="startPage">
             <div>
