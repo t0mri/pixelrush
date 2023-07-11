@@ -58,30 +58,41 @@ body {
     height: 1.5rem;
     margin-inline: 0.5rem;
 }
-button:has(img[alt="music"]) {
+.controls {
     z-index: 100;
     position: fixed;
     top: 1rem;
     left: 1rem;
     padding: 1rem;
-    border-radius: 50%;
-    border: transparent;
+    border-radius: 50vmax;
     background-color: rgba(0, 0, 0, 0.245);
+    display: flex;
+    gap: 1rem;
+    /* width: 2.25rem; */
 }
-img[alt="music"] {
-    height: 2.25rem;
+.control {
+    width: 2.25rem;
+    /* display: block; */
+    background-color: transparent;
+    border: none;
+    outline: transparent;
+    position: relative;
 }
-button:has(img[music="none"])::before {
+.control > img {
+    width: 100%;
+    filter: invert();
+}
+.control[off="false"]::before {
     content: "";
     height: 2.25rem;
     width: 0.2rem;
-    background: white;
+    background: rgb(255, 255, 255);
     position: absolute;
     rotate: -45deg;
     /* transform: translate(0%, 0%); */
-    top: 1rem;
-    left: 2rem;
-    /* z-index: 2; */
+    /* top: 1rem; */
+    left: 1rem;
+    z-index: 2;
 }
 .startPage {
     height: 100vh;

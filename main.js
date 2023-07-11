@@ -7,6 +7,7 @@ import {
     updateSignInInfo,
     updateScoreBoard,
     playGameMusic,
+    toggleFullscreen,
 } from "./ui";
 import {
     block,
@@ -90,6 +91,7 @@ heroPosX = randomPosition();
 heroPosY = randomPosition();
 
 window.toggleMusic = () => toggleMusic(game);
+window.toggleFullscreen = toggleFullscreen;
 window.changeAvatar = (key) => changeAvatar(key);
 window.signIn = () => {
     signInWithPopup(auth, new GoogleAuthProvider());

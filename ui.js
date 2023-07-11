@@ -5,7 +5,8 @@ import gameMusicSrc from "./Assets/Sfx/Extraterrestrial.mp3";
 import touchAudio from "./Assets/Sfx/touch.wav";
 
 const body = document.body;
-const musicIcon = document.querySelector(`[alt="music"]`);
+const musicIcon = document.querySelector(`[onclick="toggleMusic()"]`);
+const fullscreenIcon = document.querySelector(`[onclick="toggleFullscreen()"]`);
 const gameMusic = new Audio(gameMusicSrc);
 const avatars = document.querySelectorAll(`[alt="avatar"]`);
 const playerNamerDisplay = document.getElementById("gamerID");
@@ -30,6 +31,7 @@ let avatarIndex = localStorage.getItem("pxlrshavatarindexvalue") ?? 0;
 let loadingLoopIndex = 0;
 export let avatar = localStorage.getItem("pxlrshavatarvalue") ?? "ninja";
 let YogisCredit = true;
+let fullscreen = true;
 
 gameMusic.loop = true;
 const loadingLoopInterval = setInterval(() => {
@@ -62,17 +64,28 @@ export const toggleMusic = (game) => {
     let key = localStorage.getItem("pxlrshmscvl") == "true" ? true : false;
     gameMusic[key && game ? "play" : "pause"]();
     gameMusic.currentTime = key ? 0 : gameMusic.currentTime;
-    musicIcon.setAttribute("music", key ? "" : "none");
+    musicIcon.setAttribute("off", !key ? "false" : "true");
 };
 musicIcon.setAttribute(
-    "music",
-    (localStorage.getItem("pxlrshmscvl") == "true" ? true : false) ? "" : "none"
+    "off",
+    (localStorage.getItem("pxlrshmscvl") == "true" ? "true" : "false")
+        ? "false"
+        : "true"
 );
 
 document
     .querySelector(".startPage > div > div")
     .setAttribute("currentAvatar", avatars[avatarIndex].name);
 avatars[avatarIndex].style.display = "block";
+// document.body.requestFullscreen();
+export const toggleFullscreen = () => {
+    if ((fullscreen = !fullscreen)) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+    fullscreenIcon.setAttribute("off", !fullscreen ? "false" : "true");
+};
 export const changeAvatar = (key) => {
     new Audio(touchAudio).play();
     const tempIndex =
