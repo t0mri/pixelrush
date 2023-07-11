@@ -17,10 +17,10 @@ import {
     drawHero,
     drawLands,
     drawTrail,
-    extendLands,
+    // extendLands,
     moveCanvas,
-    resetScore,
-    score,
+    // resetScore,
+    // score,
 } from "./canvas";
 import { initializeApp } from "firebase/app";
 import {
@@ -77,6 +77,8 @@ let initialX;
 let initialY;
 let diffX;
 let diffY;
+let newLands = {};
+let score = 0;
 
 const randomPosition = () => {
     return (
@@ -101,7 +103,168 @@ const checkWalls = (x, y, max) => {
         // clearInterval(gameInterval);
     }
 };
-const landingTrails = () => {
+export const extendLands = (
+    comingback,
+    xValues,
+    yValues,
+    trails,
+    lands,
+    playersArray,
+    lobbyName
+) => {
+    if (!comingback) return;
+
+    newLands = {};
+    let nonNewLands = {};
+    let trailCount = 0;
+    let newLandCount = 0;
+
+    xValues.sort((a, b) => a - b);
+    yValues.sort((a, b) => a - b);
+
+    Object.keys(trails).forEach((trail) => {
+        trailCount++;
+        const [, x, y] = /(-?\d+),(-?\d+)/.exec(trail);
+        if (
+            lands[`${+x},${+y}`] &&
+            lands[`${+x + block},${+y}`] &&
+            lands[`${+x},${+y + block}`] &&
+            !lands[`${+x + block},${+y + block}`]
+        ) {
+            // nonNewLands = {};
+            floodFill(
+                lands,
+                newLands,
+                nonNewLands,
+                +x + block,
+                +y + block,
+                xValues[0],
+                yValues[0],
+                xValues[xValues.length - 1],
+                yValues[yValues.length - 1]
+            );
+        }
+        if (
+            lands[`${+x},${+y}`] &&
+            lands[`${+x - block},${+y}`] &&
+            lands[`${+x},${+y - block}`] &&
+            !lands[`${+x - block},${+y - block}`]
+        ) {
+            // nonNewLands = {};
+            floodFill(
+                lands,
+                newLands,
+                nonNewLands,
+                +x - block,
+                +y - block,
+                xValues[0],
+                yValues[0],
+                xValues[xValues.length - 1],
+                yValues[yValues.length - 1]
+            );
+        }
+    });
+    Object.keys(newLands).forEach((key) => {
+        if (!nonNewLands[key]) {
+            playersArray.forEach((playerData) => {
+                if (playerData.playerID != playerID) {
+                    // console.log("wurking..");
+
+                    delete playerData.lands[key];
+                    update(
+                        ref(db, `lobbies/${lobbyName}/${playerData.playerID}`),
+                        {
+                            lands: playerData.lands,
+                            // lands: { "0,0": "sdlkjflsakjd" },
+                        }
+                    );
+                }
+            });
+            newLandCount++;
+            lands[key] = "TomRI is awesome!";
+        }
+    });
+    score += Math.round(trailCount / 5 + ((trailCount / 5) * newLandCount) / 5);
+};
+const floodFill = (
+    lands,
+    newLands,
+    nonNewLands,
+    x,
+    y,
+    minX,
+    minY,
+    maxX,
+    maxY
+) => {
+    if (
+        (x == minX || x == maxX || y == minY || y == maxY) &&
+        !lands[`${x},${y}`]
+    ) {
+        // Object.keys(newLands).forEach((key) => {
+        //     nonNewLands[key] = "this should be skipped";
+        // });
+        // newLands = {};
+        return;
+    }
+    if (
+        x <= minX ||
+        x >= maxX ||
+        y <= minY ||
+        y >= maxY ||
+        lands[`${x},${y}`] ||
+        newLands[`${x},${y}`] ||
+        nonNewLands[`${x},${y}`]
+    ) {
+        return;
+    }
+    newLands[`${x},${y}`] = "new lands!!!";
+    floodFill(
+        lands,
+        newLands,
+        nonNewLands,
+        x + block,
+        y,
+        minX,
+        minY,
+        maxX,
+        maxY
+    );
+    floodFill(
+        lands,
+        newLands,
+        nonNewLands,
+        x,
+        y + block,
+        minX,
+        minY,
+        maxX,
+        maxY
+    );
+    floodFill(
+        lands,
+        newLands,
+        nonNewLands,
+        x - block,
+        y,
+        minX,
+        minY,
+        maxX,
+        maxY
+    );
+    floodFill(
+        lands,
+        newLands,
+        nonNewLands,
+        x,
+        y - block,
+        minX,
+        minY,
+        maxX,
+        maxY
+    );
+};
+const landingTrails = (playersArray, lobbyName) => {
     if (lands[`${heroPosX},${heroPosY}`] && comingback) {
         let xValues = [];
         let yValues = [];
@@ -110,8 +273,36 @@ const landingTrails = () => {
             xValues.push(x);
             yValues.push(y);
             lands[trail] = "TomRI is awesome!";
+            playersArray.forEach((playerData) => {
+                if (
+                    playerData.playerID != playerID &&
+                    playerData.lands[trail]
+                ) {
+                    // console.log("wurking trails..");
+                    // let tempOppLands = { ...playerData.lands };
+                    // console.log(Object.keys(playerData.lands).length);
+                    // delete tempOppLands[trail];
+                    delete playerData.lands[trail];
+                    // console.log(Object.keys(playerData.lands).length);
+                    update(
+                        ref(db, `lobbies/${lobbyName}/${playerData.playerID}`),
+                        {
+                            lands: playerData.lands,
+                            // lands: { "0,0": "sdlkjflsakjd" },
+                        }
+                    );
+                }
+            });
         });
-        extendLands(comingback, xValues, yValues, trails, lands);
+        extendLands(
+            comingback,
+            xValues,
+            yValues,
+            trails,
+            lands,
+            playersArray,
+            lobbyName
+        );
         update(playerRef, { lands });
         comingback = false;
     } else if (!lands[`${heroPosX},${heroPosY}`] && !comingback) {
@@ -138,8 +329,8 @@ const initGame = (lobbyName) => {
     // moveCanvas(heroPosX, heroPosY);
 
     lobbyRef = ref(db, `lobbies/${lobbyName}`);
-    lobbyRef = ref(db, `lobbies/${lobbyName}/players`);
-    playerRef = ref(db, `lobbies/${lobbyName}/players/${playerID}`);
+    lobbyRef = ref(db, `lobbies/${lobbyName}`);
+    playerRef = ref(db, `lobbies/${lobbyName}/${playerID}`);
 
     defaultLands(lands, heroPosX, heroPosY);
 
@@ -217,7 +408,7 @@ const initGame = (lobbyName) => {
                 yVel = 0;
                 direction = "right";
             }
-            // diffY > 0 ? console.log("down") : console.log("up");
+            // // diffY > 0 ? console.log("down") : console.log("up");
         }
     };
 
@@ -234,8 +425,8 @@ const initGame = (lobbyName) => {
             // lands,
             score,
         });
-        landingTrails();
         get(playerRef).then((currentPlayerData) => {
+            lands = currentPlayerData.val().lands;
             if (game && currentPlayerData.val().defeatedBy == "notYet") {
                 get(lobbyRef).then((allPlayersData) => {
                     const playersArray = [];
@@ -268,6 +459,7 @@ const initGame = (lobbyName) => {
                     updateScoreBoard(
                         scoreBoardData.sort((a, b) => b[1] - a[1])
                     );
+                    landingTrails(playersArray, lobbyName);
                 });
             } else {
                 clearInterval(gameInterval);
@@ -276,7 +468,8 @@ const initGame = (lobbyName) => {
                 remove(playerRef);
                 uiTransition(game);
                 updateScoreBoard([]);
-                resetScore();
+                // resetScore();
+                score = 0;
             }
         });
     }, 100);

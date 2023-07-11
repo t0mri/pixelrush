@@ -60,7 +60,6 @@ export const toggleMusic = (game) => {
     musicValue = !musicValue;
     localStorage.setItem("pxlrshmscvl", musicValue ? "false" : "true");
     let key = localStorage.getItem("pxlrshmscvl") == "true" ? true : false;
-    console.log(localStorage.getItem("pxlrshmscvl"), key);
     gameMusic[key && game ? "play" : "pause"]();
     gameMusic.currentTime = key ? 0 : gameMusic.currentTime;
     musicIcon.setAttribute("music", key ? "" : "none");
@@ -69,8 +68,7 @@ musicIcon.setAttribute(
     "music",
     (localStorage.getItem("pxlrshmscvl") == "true" ? true : false) ? "" : "none"
 );
-console.log(localStorage.getItem("pxlrshavatarvalue"));
-console.log(localStorage.getItem("pxlrshavatarindexvalue"));
+
 document
     .querySelector(".startPage > div > div")
     .setAttribute("currentAvatar", avatars[avatarIndex].name);
@@ -94,8 +92,6 @@ export const changeAvatar = (key) => {
     avatarIndex = tempIndex;
     localStorage.setItem("pxlrshavatarindexvalue", tempIndex);
     localStorage.setItem("pxlrshavatarvalue", avatars[tempIndex].name);
-    console.log(localStorage.getItem("pxlrshavatarvalue"));
-    console.log(localStorage.getItem("pxlrshavatarindexvalue"));
 
     if (YogisCredit && avatarIndex == 3) {
         YogisCreditContainer.style.display = "block";
